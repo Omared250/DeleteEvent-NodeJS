@@ -1,5 +1,5 @@
 const { response } = require("express");
-// const Event = require('../models/Event');
+const Event = require('../models/Event');
 
 const deleteEvent = async( req, res = response ) => {
 
