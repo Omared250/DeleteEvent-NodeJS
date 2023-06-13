@@ -1,5 +1,5 @@
 const express = require('express');
-// const { dbConnection } = require('./database/config');
+const { dbConnection } = require('./database/config');
 require('dotenv').config();
 
 
@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 
 // DataBase
-// dbConnection();
+dbConnection();
 
 // Public Directory
 // app.use( express.static('public') );
@@ -16,7 +16,7 @@ const app = express();
 app.use( express.json() );
 
 // routes
-// app.use('/api/events', require('./routes/events'));
+app.use('/api/events', require('./routes/events'));
 
 
 // Listening
