@@ -7,6 +7,6 @@ const { Router } = require('express');
 const { deleteEvent } = require('../controller/deleteEvent');
 const router = Router();
 
-router.put('/delete', deleteEvent )
+router.delete('/delete', deleteEvent )
 
 module.exports = router;

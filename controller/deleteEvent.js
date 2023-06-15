@@ -2,49 +2,42 @@ const { response } = require("express");
 const Event = require('../models/Event');
 
 const deleteEvent = async( req, res = response ) => {
+    
+    const eventId = req.query.id;
+    const uid = req.query.uid;
 
-    console.log(req.body);
+    try {
 
-    // const eventId = req.body.requestParam;
-    // const uid = req.body.requestUser;
+        const event = await Event.findById( eventId );
 
-    // try {
+        if ( !event ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Event do not exist with that Id'
+            });
+        }
 
-    //     const event = await Event.findById( eventId );
+        if ( event.user.toString() !== uid ) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No permissions to delete this event'
+            });
+        }
 
-    //     if ( !event ) {
-    //         return res.status(404).json({
-    //             ok: false,
-    //             msg: 'Event do not exist with that Id'
-    //         });
-    //     }
+        await Event.findByIdAndDelete( eventId );
 
-    //     if ( event.user.toString() !== uid ) {
-    //         return res.status(401).json({
-    //             ok: false,
-    //             msg: 'No permissions to update this event'
-    //         });
-    //     }
-
-    //     const newEvent = {
-    //         ...req.body.requestBody,
-    //         user: uid,
-    //     }
-
-    //     const updatedEvent = await Event.findByIdAndUpdate( eventId, newEvent, { new: true } );
-
-    //     res.status(201).json({
-    //         ok: true,
-    //         event: updatedEvent
-    //     });
+        res.json({
+            ok: true,
+            msg: 'Event deleted'
+        });
         
-    // } catch (err) {
-    //     console.log(err);
-    //     res.status(500).json({
-    //         ok: false,
-    //         msg: 'Yous should contact admin'
-    //     });
-    // }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Yous should contact admin'
+        });
+    }
 
 };
 
