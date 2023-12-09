@@ -39,6 +39,11 @@ const deleteEvent = async( req, res = response ) => {
             ok: false,
             msg: 'Yous should contact admin'
         });
+        
+        logger.error('Error: ', {
+            message: err.message,
+            stack: err.stack
+        });
     }
 
 };
