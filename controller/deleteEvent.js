@@ -1,5 +1,6 @@
 const { response } = require("express");
 const Event = require('../models/Event');
+const logger = require("../winston-config");
 
 const deleteEvent = async( req, res = response ) => {
     
@@ -30,7 +31,8 @@ const deleteEvent = async( req, res = response ) => {
             ok: true,
             msg: 'Event deleted'
         });
-        
+        logger.info( event );
+
     } catch (err) {
         console.log(err);
         res.status(500).json({
